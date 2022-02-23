@@ -1,0 +1,29 @@
+.board {
+  & {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 300px;
+    max-width: 580px;
+    min-height: 320px;
+    background-color: $color-yellow;
+    clip-path: polygon(0px 25px, 26px 0px, calc(60% - 25px) 0px, 60% 25px, 100% 25px, 100% calc(100% - 10px), calc(100% - 15px) calc(100% - 10px), calc(80% - 10px) calc(100% - 10px), calc(80% - 15px) 100%, 80px calc(100% - 0px), 65px calc(100% - 15px), 0% calc(100% - 15px));
+  }
+
+  &__dialog {
+    position: absolute;
+    top: 5%;
+    right: 25%;
+  }
+
+  &__health {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 60%;
+    height: 25px;
+    text-align: center;
+  }
+}

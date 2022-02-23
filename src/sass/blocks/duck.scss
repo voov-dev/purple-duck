@@ -1,0 +1,43 @@
+.duck {
+  position: relative;
+  width: calc(32px * var(--pixel-size));
+  height: calc(32px * var(--pixel-size));
+  overflow: hidden;
+
+  &__sprite-sheet {
+    display: block;
+    max-width: inherit;
+    width: calc(416px * var(--pixel-size));
+    height: calc(224px * var(--pixel-size));
+  }
+
+  &__sprite-sheet-wrap {
+    position: absolute;
+    top: calc(-29px * var(--pixel-size));
+    left: 0;
+    width: calc(416px * var(--pixel-size));
+    animation: moveSpriteSheet 2.5s steps(13) infinite;
+    user-select: none;
+    pointer-events: none;
+    image-rendering: pixelated;
+  }
+
+  &--jump &__sprite-sheet-wrap {
+    top: 0;
+    width: calc(256px * var(--pixel-size));
+    animation: moveSpriteSheet 1.25s steps(8) infinite;
+  }
+
+  &--hurt &__sprite-sheet-wrap {
+    top: calc(-60px * var(--pixel-size));
+    width: calc(64px * var(--pixel-size));
+    animation: moveSpriteSheet 0.3s steps(2) infinite;
+  }
+
+  &--quack &__sprite-sheet-wrap {
+    top: calc(-156px * var(--pixel-size));
+    width: calc(64px * var(--pixel-size));
+    animation: moveSpriteSheet 0.5s steps(2) infinite;
+  }
+}
+

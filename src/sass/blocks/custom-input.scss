@@ -1,0 +1,100 @@
+.custom-input,
+.custom-textarea {
+  $block-name:                &; // #{$block-name}__element
+
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 80px;
+  margin-top: 75px;
+  background-color: $color-yellow;
+  clip-path: polygon(0px 25px, 26px 0px, calc(60% - 25px) 0px, 60% 25px, 100% 25px, 100% calc(100% - 10px), calc(100% - 15px) calc(100% - 10px), calc(80% - 10px) calc(100% - 10px), calc(80% - 15px) 100%, 80px calc(100% - 0px), 65px calc(100% - 15px), 0% calc(100% - 15px));
+
+  &__name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 35px 35px 20px;
+    font-size: 18px;
+    line-height: 1.2;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform: none;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+  }
+
+  &__field-wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  &__field {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    min-height: 95px;
+    padding: 35px 35px 20px;
+    font-size: 18px;
+    line-height: 1.2;
+    color: $color-default-black;
+    background-color: $color-yellow;
+    border: none;
+    outline: none;
+    transition: border $trans-default;
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+
+  &__field:focus + &__name,
+  &__field:not(:placeholder-shown) + &__name {
+    transform: scale(0.95) translateY(-1.2rem);
+  }
+
+  &__error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 15px 0 5px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: $color-torch-red;
+    opacity: 0;
+    transition: opacity $trans-default;
+    transform: scale(0.75) translateY(-1.2rem);
+    transform-origin: 0 0;
+  }
+
+  &.is-invalid &__field,
+  &.is-invalid &__field:focus,
+  &.is-invalid &__field:hover {
+    border-color: $color-torch-red;
+  }
+
+  &.is-invalid &__field:focus + &__name,
+  &.is-invalid &__field:not(:placeholder-shown) + &__name {
+    display: none;
+  }
+
+  &.is-invalid &__error {
+    opacity: 1;
+  }
+
+  /*&.is-valid {
+    input {
+      border: 2px solid $color-malachite;
+
+      &:focus,
+      &:hover {
+        border: 2px solid rgba($color-malachite, 0.5);
+      }
+    }
+  }*/
+}
