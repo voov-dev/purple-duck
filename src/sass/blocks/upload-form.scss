@@ -1,0 +1,10 @@
+.upload-form {
+  position: relative;
+
+  &__button {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    margin: 0;
+  }
+}

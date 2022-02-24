@@ -16,8 +16,13 @@
 .attribute {
   & {
     margin: 0.5rem 0;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 12px;
+    line-height: 1.2;
+
+    @mixin vp-768 {
+      font-size: 14px;
+      line-height: 1.4;
+    }
   }
 
   &__inner {
@@ -37,13 +42,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     padding: 0 5px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1;
     background-color: transparent;
     border: 3px solid $color-default-black;
+
+    @mixin vp-768 {
+      width: 25px;
+      height: 25px;
+      font-size: 16px;
+    }
 
     &:not(.attribute__btn-inc--active) {
       display: none;

@@ -5,6 +5,7 @@
   align-items: flex-start;
   background-color: $color-default-black;
   min-height: 100vh;
+  overflow: hidden;
 
   &__col {
     flex-grow: 1;
@@ -18,6 +19,7 @@
   }
 
   &__info {
+    position: relative;
     flex-grow: 1;
     min-width: 300px;
     max-width: 580px;
@@ -26,6 +28,56 @@
     padding: 35px 25px 15px;
     background-color: $color-yellow;
     //clip-path: polygon(0 0, 100% 0, 100% 100%, 95% 100%, 95% 90%, 85% 90%, 85% 100%, 8% 100%, 0 70%);
+    background-image: url("../../img/bg-deco-desktop.svg");
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: 0;
+      left: 0;
+      display: block;
+      height: 23px;
+      background-image: url("../../img/top-line-yellow.svg");
+      background-position: bottom;
+      background-repeat: repeat-x;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      height: 23px;
+      background-image: url("../../img/bottom-line.svg");
+      background-position: bottom;
+      background-repeat: repeat-x;
+    }
+  }
+
+  &__controls {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__control {
+    flex-grow: 1;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  &__control--right {
+    margin-top: 25px;
+    margin-bottom: -5px;
+    text-align: right;
+
+    @mixin vp-768 {
+      margin-top: 50px;
+      margin-bottom: -20px;
+    }
   }
 
   &__header {
@@ -35,15 +87,31 @@
 
   &__headline {
     position: relative;
-    max-width: calc(100% - 90px);
-    min-height: 55px;
-    margin: 0 0 3.5rem;
+    min-height: 10px;
+    max-width: calc(100% - 70px);
+    width: 100%;
+
+    &:not(:empty) {
+      min-height: 35px;
+      margin: 0 0 3.5rem;
+      font-size: 14px;
+
+      @mixin vp-768 {
+        min-height: 55px;
+        max-width: calc(100% - 90px);
+        font-size: 24px;
+      }
+    }
+
+    &:not(:empty):before {
+      bottom: -1.5rem;
+    }
 
     &:before {
       content: '';
       position: absolute;
       left: 2px;
-      bottom: -1.5rem;
+
       display: block;
       width: 100%;
       height: 10px;
@@ -56,12 +124,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     margin-left: 15px;
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1;
     text-align: center;
     border: 5px solid $color-default-black;
+
+    @mixin vp-768 {
+      width: 75px;
+      height: 75px;
+      font-size: 24px;
+    }
   }
 }

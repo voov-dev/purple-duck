@@ -16,13 +16,17 @@
     left: 0;
     height: 100%;
     padding: 35px 35px 20px;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.2;
     pointer-events: none;
     border: 1px solid transparent;
     transform: none;
     transform-origin: 0 0;
     transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+
+    @mixin vp-768 {
+      font-size: 18px;
+    }
   }
 
   &__field-wrap {

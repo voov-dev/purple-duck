@@ -1,0 +1,15 @@
+.custom-file {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 95px;
+  padding: 35px 35px 20px;
+  font-size: 14px;
+  line-height: 1.2;
+  background-color: $color-yellow;
+  clip-path: polygon(0px 25px, 26px 0px, calc(60% - 25px) 0px, 60% 25px, 100% 25px, 100% calc(100% - 10px), calc(100% - 15px) calc(100% - 10px), calc(80% - 10px) calc(100% - 10px), calc(80% - 15px) 100%, 80px calc(100% - 0px), 65px calc(100% - 15px), 0% calc(100% - 15px));
+
+  @mixin vp-768 {
+    font-size: 18px;
+  }
+}
