@@ -1,145 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './sass/style.scss';
-import imageSrc from './img/PurpleDuck-Sheet.png'
-
-function Duck(props) {
-    return (
-        <div
-            className={
-                `duck 
-                ${props.isHit ? 'duck--hurt' : ''} 
-                ${props.isJump ? 'duck--jump' : ''}`
-            }
-            onClick={() => props.onClick()}>
-            <div className="duck__sprite-sheet-wrap">
-                <img src={imageSrc} className="duck__sprite-sheet" alt={props.name}/>
-            </div>
-        </div>
-    )
-}
-
-function Board(props) {
-    return (
-        <div className="board">
-            <div className="board__hero-box">
-                <Duck onClick={() => props.onClick()}
-                      isHit={props.isHit}
-                      isJump={props.isJump} />
-            </div>
-            <div className="board__health">{`HP ${props.health} / ${props.maxHealth}`}</div>
-        </div>
-    )
-}
-
-function Attributes(props) {
-    const ATTRIBUTES = props.attributes;
-
-    return (
-        <ul className="attributes">
-            {
-                ATTRIBUTES ? ATTRIBUTES.map((attribute) => {
-                        if (attribute.skills) {
-                            return <Attribute
-                                key={attribute.name.toString()}
-                                name={attribute.name}
-                                value={attribute.value}
-                                isActive={props.isActive}
-                                parentCount={attribute.parentCount}
-                                onClick={() => props.onClick(attribute.name.toString())}
-                            >
-                                <Attributes
-                                    attributes={attribute.skills}
-                                    isActive={props.isActive}
-                                    onClick={props.onClick}
-                                />
-                            </Attribute>
-                        }
-
-                        return <Attribute
-                            key={attribute.name.toString()}
-                            name={attribute.name}
-                            value={attribute.value}
-                            isActive={props.isActive}
-                            parentCount={attribute.parentCount}
-                            onClick={() => props.onClick(attribute.name.toString())}
-                        />
-                    })
-                    : (props.children)
-            }
-        </ul>
-    )
-}
-
-function Attribute(props) {
-    return (
-        <li className="attribute">
-            <div className="attribute__inner">
-                <span className="attribute__name">{props.name}</span>
-                <span className="attribute__value">{props.value}</span>
-                <button
-                    className={`attribute__btn-inc 
-                        ${props.isActive && props.value < 5 ? 'attribute__btn-inc--active' : ''}
-                        ${props.value >= props.parentCount ? 'attribute__btn-inc--disabled' : ''}
-                        ${props.parentCount}`
-                    }
-                    onClick={props.onClick}
-                >+</button>
-            </div>
-            {(props.children)}
-        </li>
-    )
-}
-
-class FileInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.fileInput = React.createRef();
-        this.state = {
-            name: 'Файл://',
-            isActive: false,
-        }
-    }
-
-    changeHandler(evt) {
-        const name = evt.target.files[0] ? evt.target.files[0].name : 'Файл://';
-
-        this.setState({
-            name: name,
-            isActive: Boolean(evt.target.files[0]),
-        });
-    }
-
-    handleSubmit(evt) {
-        evt.preventDefault();
-
-        let file = this.fileInput.current.files[0];
-        let reader = new FileReader();
-
-        reader.readAsText(file, "UTF-8");
-        reader.onload = (evt) => {
-            this.props.updateHero(JSON.parse(evt.target.result));
-        }
-    }
-
-    render() {
-        return (
-            <form className="upload-form" onSubmit={this.handleSubmit}>
-                <label className="custom-file">
-                    {this.state.name}
-                    <input className="visually-hidden"
-                           type="file"
-                           onChange={this.changeHandler.bind(this)}
-                           ref={this.fileInput} />
-                </label>
-                <br />
-                <button className="upload-form__button custom-button"
-                        type="submit" disabled={!this.state.isActive}>Загрузить</button>
-            </form>
-        );
-    }
-}
+import Board from "./components/Board";
+import FileInput from "./components/FileInput";
+import {Attributes, Attribute} from "./components/Attributes";
 
 class Game extends React.Component {
     constructor(props) {
@@ -258,10 +122,10 @@ class Game extends React.Component {
     }
 
     changeHandler(evt) {
-        let duck = Object.assign({}, this.state.hero);
-        duck.name = evt.target.value;
+        let heroDuck = Object.assign({}, this.state.hero);
+        heroDuck.name = evt.target.value;
         this.setState({
-            hero: duck,
+            hero: heroDuck,
             isActiveBtnSave: Boolean(evt.target.value),
         });
     }
@@ -271,15 +135,15 @@ class Game extends React.Component {
     }
 
     handleClickAttribute(key) {
-        const HERO = Object.assign({}, this.state.hero);
-        const FREE_POINTS = this.state.hero.freePoints;
-        const HERO_ATTRIBUTES = this.state.hero.attributes.slice();
+        const heroDuck = Object.assign({}, this.state.hero);
+        const freePoints = heroDuck.freePoints;
+        const attributes = heroDuck.attributes;
 
-        if (FREE_POINTS && HERO_ATTRIBUTES && key) {
-            let attr = this.findItem(HERO_ATTRIBUTES, key);
+        if (freePoints && attributes && key) {
+            let attr = this.findItem(attributes, key);
 
             if (!attr) {
-                HERO_ATTRIBUTES.forEach((item) => {
+                attributes.forEach((item) => {
                     let skills = this.findItem(item.skills, key);
 
                     if (skills) {
@@ -294,22 +158,22 @@ class Game extends React.Component {
 
             if (attr && attr.value < 5) {
                 attr.value += 1;
+                heroDuck.vitality = this.findItem(attributes, 'Сила').value + 3;
+                heroDuck.evasion = this.findItem(attributes, 'Ловкость').value + 10;
+                heroDuck.boldness = this.findItem(attributes, 'Ловкость').value + this.findItem(attributes, 'Интеллект').value;
+                heroDuck.freePoints--;
+                heroDuck.attributes = attributes;
+
                 this.setState({
-                    hero: Object.assign(HERO, {
-                        vitality: this.findItem(HERO_ATTRIBUTES, 'Сила').value + 3,
-                        evasion: this.findItem(HERO_ATTRIBUTES, 'Ловкость').value + 10,
-                        boldness: this.findItem(HERO_ATTRIBUTES, 'Ловкость').value + this.findItem(HERO_ATTRIBUTES, 'Интеллект').value,
-                        freePoints: FREE_POINTS - 1,
-                        attributes: HERO_ATTRIBUTES,
-                    })
+                    hero: heroDuck,
                 });
             }
         }
     }
 
-    updateHero(duck) {
+    updateHero(heroDuck) {
         this.setState({
-            hero: duck,
+            hero: heroDuck,
         });
     }
 
