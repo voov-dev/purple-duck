@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/purple-duck/static/css/main.2990194d.css",
+    "main.js": "/purple-duck/static/js/main.076e7ac8.js",
+    "static/media/bg-deco-desktop.svg": "/purple-duck/static/media/bg-deco-desktop.67fb4442c861f8c74430.svg",
+    "static/media/bottom-line.svg": "/purple-duck/static/media/bottom-line.6188131da25824b4fd8f.svg",
+    "static/media/top-line-yellow.svg": "/purple-duck/static/media/top-line-yellow.9a3e81239bf087c445df.svg",
+    "index.html": "/purple-duck/index.html",
+    "main.2990194d.css.map": "/purple-duck/static/css/main.2990194d.css.map",
+    "main.076e7ac8.js.map": "/purple-duck/static/js/main.076e7ac8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2990194d.css",
+    "static/js/main.076e7ac8.js"
+  ]
+}
